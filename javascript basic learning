@@ -1,0 +1,47 @@
+function buttonClick() {  //function gets called in html
+    
+    alert("thank for clicking");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+// INNERTEXT CHANGMENT TWO WAYS 
+
+document.getElementById("para1").innerText="hello bru";  // document look at the doucment it's connected to. 
+// getelemtnbtid find the id in the document 
+// innertext change the text of the id 
+
+var innerTextVar=document.getElementById("para2")    // define a variable with the founded id 
+innerTextVar.innerText="hello bru variable";        // change the value of the founded id 
+
+
+*/
+
+/*
+
+             SWITCH STATEMENT
+var num =2; 
+
+switch (num) {
+        
+    case 1: alert ("number was one");
+        break;
+        
+    case 5: alert("number was 5");
+        break;
+    default: alert("Defulat");
+        
+}
+*/
