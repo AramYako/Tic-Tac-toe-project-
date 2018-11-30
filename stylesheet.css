@@ -52,7 +52,7 @@ canvas {
 
 }
 
-#tic {
+#allBoxes {
     position: relative; /* adjust it if the screen size changes*/ 
     margin: 0 auto;
     height: 318px;
