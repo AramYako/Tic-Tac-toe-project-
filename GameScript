@@ -7,7 +7,7 @@ window.onload = function() {    //   // The function executes when window is loa
 	var gameOver = false;  //  If true, the game should end.  
 	var human = 'X';      // The symbol value this object give
 	var ai = 'O';        // The symbol value this object give
-	var result = {};    // this write the result with innertext, change a value in the html text 
+	var result = {};    // 
 	var filled = new Array(); // hold value if a box has a value or not 
 	var symbol = new Array();  // Hold value saying wwhich symbol each box holds. 
 	var winner = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];   //  These ar the winning pattern in the tic tac toe.		
@@ -17,10 +17,8 @@ window.onload = function() {    //   // The function executes when window is loa
 		filled[i] = false;                                                       //  Put all the canvas boxes as empty array
 		symbol[i] = '';                                                            // Put all symbol as empty in the array
 	}
+
 	//------------------------------------------------------------------------------------------------------------------------------------//
-
-
-
 	//newGame - event + function
 	var n = document.getElementById("new");               // find the button with id "new" and assign it to the variable n
 	n.addEventListener("click",newGame);                  // add eventlistner to the varaible n, when button is pressed the function newGame will start 
@@ -36,14 +34,20 @@ window.onload = function() {    //   // The function executes when window is loa
 	
 	//Canvas click + retrieving the box's number 
 	//canvas click event
-	document.getElementById("tic").addEventListener("click",function(e){   // Find the id Tic=(all canvas) and add eventlistner to that. When a canvas is pressed in start  event object 
-		
-		boxClick(e.target.id);                
+
+		          
+// Find the id Tic=(all canvas) and add eventlistner to that. When a canvas is pressed in start  event object 
+			document.getElementById("tic").addEventListener("click",function(e){  
+				boxClick(e.target.id);
 		// it start the function e that is event object. 
 		// this calls for the boxClick function and send argument with it. The argument is the id of the canvas that was clicked. 
 		// e.target.id says that the element that started the function what is the target id of that element. 
 	});
+
 	
+
+
+
 	//2.Drawing X's and O's
 	//Draw X
 	function drawX() {             //the method/function drawX
@@ -76,8 +80,11 @@ window.onload = function() {    //   // The function executes when window is loa
 		ctx.stroke();                       // execute 
 		ctx.closePath();                 // close 
 		
-		symbol[next] = ai; // we are tryong to solve that next mean, we think it belong to the minmax alogorithm <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-	}
+		symbol[next] = ai;  // the array symbol that contains all the information which player has clicked on a box update the array. The next value is the id that the function
+		// drawO recived. The symbol array take thid id, and insert that it was ai that clicked here, since draw0 is for ai. 
+		// symbol[5]=ai. this means that ai pressed on the sixth element, and this element was clicked by AI 
+		
+		}
 	
 	//3.Winner check function         // this is a function that gets called in the script, this function also recived 2 arguments 
 	function winnerCheck(symbol,player) {                     // this function recived two arguments 
@@ -155,23 +162,28 @@ window.onload = function() {    //   // The function executes when window is loa
 	}
 
 
-	 //Find the empty boxes in the game /// AI use this. 
-	 function emptyBoxes(newSymbol) {   // function that gets called, this function recive a argument as array(this array is tsymbol array, contains what suymbol each canvax box has/has nott)
+	           //Find the empty boxes in the game /// AI use this. 
+	//5. Find the empty boxes
+
+
+	function emptyBoxes(newSymbol) {   // function that gets called, this function receive an argument as array(this array is symbol array, contains what syymbol each canvax box has/has nott)
         var j = 0; 
-        var empty =[];    // creeate a new array, that will contain what canvax boxes ar actually empy: This is the ai eye
+        var empty =[];    // creeate a new array, that will contain what canvax boxes ar actually empy: This is the ai eye and this array is only local array
         for(var i=0;i<newSymbol.length;i++ ){              // loops through the array that came from argument(contains symbols)
 
             if(newSymbol[i] !== "X" && newSymbol[i] !== "O"){  // look at the recived array if it contains symbols 
-                // if newSymbol[0] contains x or o, the script will jymp away from the if statement 
+                // if newSymbol[0] contains x or o, the script will jump away from the if statement 
                 // if newSymbol[3] does not contain X or Y, the script will procedd with the if statement 
                  
-                emty[j]= i; 
-                // the new created array Emty will have new value empty[0]=4
+				empty [j]= i;
+
+				
+                // the new created array empty  will have new value empty[0]=4
                 // if newSymbol[4] does not contain X or Y
                  // the new created array Emty will have new value empty[1]=5
                 j++    // add on thje j value, that define where in the new created array empty that new value should be inserted to.
             }
-            return emty;  // return the array. 
+            return empty;  // return the array. 
         }
 
 
@@ -180,54 +192,84 @@ window.onload = function() {    //   // The function executes when window is loa
 
 	 /// MAKE THE AI PLAY
 
+
+
+
     ///playAI() function
+	function playAI(){
+		var nextMove=miniMax(symbol,ai); 
+		 // object that stores id of next move and score of the box for next move 
+		// nextMove call the function MinMax to know where to draw. 
+		// the minMax method will recieve symbol and ai argument.
+		// the function(minmax) will return an object, that will be stored in "nextMove"
+		// it will return: ID of the box, which box it should draw on
+		// and the score of that particular box(minmax tree)
 
-    function playAI(){
-        var nextMove=miniMax(Symbol,ai);  // object that stores id of next move and score of the box for next move 
 
-        var nextId = "canvas" + (nextMove.id +1);
-        
-        box = decument.getElementById(nextId);
-        ctx  = box.getContext("2d");
+	
 
-        if(gameOver == false) {
-            if (turn%2 == 0 ) {
-                drawO(nextMove.id);
-                turn++;
-                filled[nextMove.id] = true;
+		var nextId = "canvas" + (nextMove.id +1);  
+		  // the variable nextId will be the id on the canvas box that it should draw the next move. 
+		// nextMove.id is because that this variable have the score and what id it should draw as object. 
+		// nextMove.id is the id it reicived from the minMax function 
+		// this tells the AI what box it should draw next, when the minmax algorthm has been implemented
+		// than we do +1 since arrays begin in 0 but the canvas boxes begin in 1 
+		// we also implement "canvas" since the id of a convas box is for exampel canvas3, canvas4 so **var nextId = "canvas" + (nextMove.id +1);** can be canvas4
+
+		
+
+        box = decument.getElementById(nextId);    // box contains information which box that was clicked 
+        ctx  = box.getContext("2d");             // we tell the system that this box should be 2d 
+
+        if(gameOver == false) {                // check if the game is over or not
+            if (turn%2 == 0 ) {               // and we also check if it is actually ai turn 
+                drawO(nextMove.id);          // we call the function Drawo and send an argument that contains the id of the box that should be drawed on. 
+                turn++;                     // increase the turn value, so next time it's human turn
+				filled[nextMove.id] = true;  // the filled array that contains data of which boxes has been filled. This array will be update with the AI box chooise. 
+				
                 
-                if (winnerCheck (symbol, symbol[nextMove.id]) == true ) {
+				if (winnerCheck (symbol, symbol[nextMove.id]) == true ) {   // check if anyone won, the ai or human, we send arguments to the function winnerCheck
+					// the function recived the smbol argument and the who the player is etc the Ai or "O",   symbol[nextMove.id] is array that contains all the symbols. 
+					// so in this if-statement the array take the symbol in nextMove.Id that is the id of the box that was drawed. And the symbol here is "o" that is the AI player 
+					// if winnercehck is true, after the argument has been sent to the function the if-statement will procedd, and there is a winner, otherwise no winner 
 
-                    document.getElementById("result").innerText= "player '" + symbol[nextMove.id] + "' won!";
-                    gameOver=true;  
+                    document.getElementById("result").innerText= "player '" + symbol[nextMove.id] + "' won!";   // innertext function
+                    gameOver=true;              // set the game to gameover, since there was a winner 
                 }
                 // draw condition 
-                if (turn>9 && gameOver !== true) {
-                    document.getElementById("result").innerText = "Game Over it was a draw";
+				if (turn>9 && gameOver !== true) {           // if no winner was found, we will check if it was draw after ai has played. it can be maximun of 9 turns in a tic tac toe 
+					// the turn variable begins in 1 and when someone play the turn value increase to 2. so when the turn value is 10, there has been 9 moves. 
+					// if turn >10 and game is not gameover (winner) than it's draw 
+					
+                    document.getElementById("result").innerText = "Game Over it was a draw";   // innerfunction 
 
                 }
             }
         }
-        else {
-            alert("Game is over. Please restart the game to play again");
+        else {  // if gameover statement was true than the if-statement will not procced. It will jump down here
+            alert("Game is over. Please restart the game to play again");   // alert 
         }
 
         
 
-    }
+	}
 
-    function miniMax(newSymbol,player) {   /// this function recives 2 arguments, 
+	function miniMax(newSymbol,player) {   /// this function recives 2 arguments, the newSymbol is just to create the root of the tree. When users or ai choose some other boxes it need 
+		// to create new arrays
         // this is a recursive function
 		//A recursive function (DEF) is a function which either calls itself or is in a potential cycle of function calls
+		// this function will get the newSymbol everytime someone plays, since the game board will change, and new score will be implemented to the alogrithm 
 		
-		var empty = [];   // create a new local array 
-		empty=emptyBoxes(newSymbol);   // this array recived the return value from the method emptyBoxes. 
-		// ^^ this code, call for the function emptyboxes and send an argument, newSymbol that is the array with the symbols
+		var empty = [];   // create a new local array that is empty 
 
-		if(winnerCheck(newSymbol,human)) {       // check if the human has won, call the winnercheck method with arguments
+		empty=emptyBoxes(newSymbol);   // this array recived the return value from the method emptyBoxes. The function emptyBox return a array with all the empty boxes 
+		// ^^ this code, call for the function emptyboxes and send an argument, newSymbol that is the array with the symbols and then return with all the empty boxes available for the AI 
+		
+
+		if(winnerCheck(newSymbol,human)) {       // check if the human has won, call the winnercheck method with arguments 	if(winnerCheck(newSymbol,human)) is equal to 	if(winnerCheck(newSymbol,human)==true)
 			return { score: -10};               // return score -10 if ai lose, this is sent as object, idk yet (77)
 		}
-		else if (winnerCheck(newSymbol,ai)) {
+		else if (winnerCheck(newSymbol,ai)) {       // else if (winnerCheck(newSymbol,ai)) is equal to else if (winnerCheck(newSymbol,ai)==true) check if ai won 
 
 			return { score: 10}; // ai won, object 
 		}
@@ -243,7 +285,7 @@ window.onload = function() {    //   // The function executes when window is loa
 		
 
 
-	}
+	
 
 
 		// possible moves -their indices and score values 
@@ -252,32 +294,71 @@ window.onload = function() {    //   // The function executes when window is loa
 		for (var i =0; i<empty.length; i++){   // 
 			// current move, will hold index of current move and score of current move. 
 			var curMove= [];
-
 			// generate the new board with the current move 
+			//generate the new board with the current move
+		
+																								      
+			curMove.id = empty[i]; //4
+			newSymbol[empty[i]] = player; //AI												  
+																								  
 
-			current.id=empty[i];
-			newSymbol[ [empty[i]]] == player;
-			
-			if( player == ai ) {
-				result == miniMax(newSymbol, human);  // index and scofre
 
-				curMove.score=result.score;
+
+			if(player === ai) {
+				//result = [{id:4,score:-10}], 
+				//curMove = {id:1,score:-10}
+				result = miniMax(newSymbol, human); //index and score
+				curMove.score = result.score; //10
 			}
 			else {
+				//result = [{id:6, score:10}]
+				//curMove = {id:6, score:10}
 				result = miniMax(newSymbol, ai);
-				
-					curMove.score=result.score;
+				curMove.score = result.score; //-10
+				//level 2 move 1 curMove = {id: 6, score: 10}
+				//level 3 move 1 -> posMoves = [{id:4,score:10}]
+				//level 2 move 1 -> posMoves = [{id:6, score:10}]
+			}
 
-				}
+			
+		
 				newSymbol[empty[i]]= "";
 
 				postMove.push(curMove);  // will tell score and index 
 		
 		}
 
-        
-    
-	
 
+		//Calculate score of intermediate states - best move + score with respect to that player + return statement 
+		var bestMove;
+		//AI - max player (always) -> choose maximum value, human - min player -> choose minimum value
+		
+		if(player === ai) {
+			//posMoves = [{id:4,score:10},{id:6,score:10},{id:1,score:-10}]
+			var highestScore = -1000;
+			for(var j=0; j<posMoves.length;j++) {
+				if(posMoves[j].score > highestScore) {
+					highestScore = posMoves[j].score;
+					bestMove = j; //0
+				}
+			}
+		}
+		else {
+			var lowestScore=1000;
+			for (var j=0;j<posMoves.length; j++){
+				if(posMoves[j].score<lowestScore) {
+					lowestScore=posMoves[j].score;
+					bestMove=j;
+				}
+
+			}
+		}
+		return postMove[bestMove];
+	}
 };
+	
+	
+	
+	
+	
 	
