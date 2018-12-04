@@ -87,7 +87,7 @@ window.onload = function() {    //   // The function executes when window is loa
 // if all 3 arrays has been true with the player then, player has won. Since the win array contain for exampel 0,1,2, that say this is 3 in a row=win. It compare these
 // spots with player to see if all these 3 spots is equal to player. If yes, than player hos won. 
 
-				return true;   // return true if a player has won
+				return true;   // return true if a player has win 
 			} 
 		}
 		return false;   // return false if a player has lost.
@@ -152,10 +152,11 @@ window.onload = function() {    //   // The function executes when window is loa
 		else {
 			alert("This box was already filled. Please click on another one.")   // if a box is filled 
 		}
-    }
-    
-    //Find the empty boxes in the game /// AI use this. 
-    function emptyBoxes(newSymbol) {   // function that gets called, this function recive a argument as array(this array is tsymbol array, contains what suymbol each canvax box has/has nott)
+	}
+
+
+	 //Find the empty boxes in the game /// AI use this. 
+	 function emptyBoxes(newSymbol) {   // function that gets called, this function recive a argument as array(this array is tsymbol array, contains what suymbol each canvax box has/has nott)
         var j = 0; 
         var empty =[];    // creeate a new array, that will contain what canvax boxes ar actually empy: This is the ai eye
         for(var i=0;i<newSymbol.length;i++ ){              // loops through the array that came from argument(contains symbols)
@@ -174,8 +175,10 @@ window.onload = function() {    //   // The function executes when window is loa
         }
 
 
-    }
-    /// MAKE THE AI PLAY
+	}
+	
+
+	 /// MAKE THE AI PLAY
 
     ///playAI() function
 
@@ -240,10 +243,9 @@ window.onload = function() {    //   // The function executes when window is loa
 		
 
 
+	}
 
 
-
-		
 		// possible moves -their indices and score values 
 
 		var postMove = [];  // array, will hold a index and score 
@@ -274,10 +276,8 @@ window.onload = function() {    //   // The function executes when window is loa
 		}
 
         
-    }
+    
 	
 
 };
-	
-	
 	
